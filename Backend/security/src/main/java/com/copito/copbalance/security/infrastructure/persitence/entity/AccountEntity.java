@@ -1,5 +1,6 @@
 package com.copito.copbalance.security.infrastructure.persitence.entity;
 
+import com.copito.copbalance.security.domain.model.enums.RoleEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 @Data
 public class AccountEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Email
@@ -34,14 +36,14 @@ public class AccountEntity {
     @Pattern(regexp = "^3\\d{9}$", message = "Ingrese un numero de teléfono correcto")
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private RoleEntity role;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
     @Column(nullable = false, name = "created_at")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDate createdAt;
 
-    @Column(nullable = false, name = "last_session")
+    @Column(name = "last_session")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDate lastSession;
 

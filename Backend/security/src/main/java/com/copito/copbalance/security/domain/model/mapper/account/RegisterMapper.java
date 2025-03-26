@@ -3,20 +3,22 @@ package com.copito.copbalance.security.domain.model.mapper.account;
 import com.copito.copbalance.security.domain.model.dto.request.RegisterRequest;
 import com.copito.copbalance.security.domain.model.dto.response.RegisterResponse;
 import com.copito.copbalance.security.domain.model.entity.Account;
-import com.copito.copbalance.security.domain.model.entity.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @Component
 public class RegisterMapper {
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     public Account toEntity(RegisterRequest request){
         return Account.builder()
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(encoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
                 .build();
     }

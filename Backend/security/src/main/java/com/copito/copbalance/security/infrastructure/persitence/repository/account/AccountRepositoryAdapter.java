@@ -3,8 +3,6 @@ package com.copito.copbalance.security.infrastructure.persitence.repository.acco
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
 import com.copito.copbalance.security.infrastructure.persitence.entity.AccountEntity;
-import com.copito.copbalance.security.infrastructure.persitence.repository.role.RoleRepositoryAdapter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,11 +10,9 @@ import java.util.Optional;
 @Repository
 public class AccountRepositoryAdapter implements AccountRepositoryPort {
     private final AccountJpaRepository accountJpaRepository;
-    private final RoleRepositoryAdapter roleRepositoryAdapter;
 
-    public AccountRepositoryAdapter(AccountJpaRepository accountJpaRepository, RoleRepositoryAdapter roleRepositoryAdapter){
+    public AccountRepositoryAdapter(AccountJpaRepository accountJpaRepository){
         this.accountJpaRepository = accountJpaRepository;
-        this.roleRepositoryAdapter = roleRepositoryAdapter;
     }
 
     @Override
@@ -46,7 +42,7 @@ public class AccountRepositoryAdapter implements AccountRepositoryPort {
                 account.getEmail(),
                 account.getPassword(),
                 account.getPhoneNumber(),
-                roleRepositoryAdapter.toEntity(account.getRole()),
+                account.getRole(),
                 account.getCreatedAt(),
                 account.getLastSession(),
                 account.isAccountNonExpired(),
@@ -62,7 +58,7 @@ public class AccountRepositoryAdapter implements AccountRepositoryPort {
                 entity.getEmail(),
                 entity.getPassword(),
                 entity.getPhoneNumber(),
-                roleRepositoryAdapter.toDomain(entity.getRole()),
+                entity.getRole(),
                 entity.getCreatedAt(),
                 entity.getLastSession(),
                 entity.isAccountNonExpired(),

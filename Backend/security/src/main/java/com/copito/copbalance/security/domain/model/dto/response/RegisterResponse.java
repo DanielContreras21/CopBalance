@@ -1,6 +1,6 @@
 package com.copito.copbalance.security.domain.model.dto.response;
 
-import com.copito.copbalance.security.domain.model.entity.Role;
+import com.copito.copbalance.security.domain.model.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,7 @@ public class RegisterResponse {
     private String email;
     private String password;
     private String phoneNumber;
-    private Role role;
+    private RoleEnum role;
     private LocalDate createdAt;
     private LocalDate lastSession;
     private boolean AccountNonExpired;
