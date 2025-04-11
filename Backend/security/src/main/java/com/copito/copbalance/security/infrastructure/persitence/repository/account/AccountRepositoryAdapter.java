@@ -23,11 +23,17 @@ public class AccountRepositoryAdapter implements AccountRepositoryPort {
 
     @Override
     public Optional<Account> findByEmail(String email) {
+        if (email == null){
+            throw new IllegalArgumentException("El email no puede ser null");
+        }
         return accountJpaRepository.findByEmail(email).map(this::toDomain);
     }
 
     @Override
     public Optional<Account> findById(String id) {
+        if (id == null){
+            throw new IllegalArgumentException("El id no puede ser null");
+        }
         return accountJpaRepository.findById(id).map(this::toDomain);
     }
 
