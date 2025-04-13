@@ -5,12 +5,13 @@ import com.copito.copbalance.security.domain.model.enums.RoleEnum;
 import com.copito.copbalance.security.infrastructure.persitence.entity.AccountEntity;
 import com.copito.copbalance.security.infrastructure.persitence.repository.account.AccountJpaRepository;
 import com.copito.copbalance.security.infrastructure.persitence.repository.account.AccountRepositoryAdapter;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,18 +21,14 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@ExtendWith({org.mockito.junit.jupiter.MockitoExtension.class})
+@ExtendWith({MockitoExtension.class})
 public class AccountRepositoryTests {
 
     @Mock
     private AccountJpaRepository accountJpaRepository;
 
+    @InjectMocks
     private AccountRepositoryAdapter accountRepositoryAdapter;
-
-    @BeforeEach
-    void seUp(){
-        accountRepositoryAdapter = new AccountRepositoryAdapter(accountJpaRepository);
-    }
 
     public static Stream<Arguments> findByIdCases() {
         LocalDate now = LocalDate.now();
