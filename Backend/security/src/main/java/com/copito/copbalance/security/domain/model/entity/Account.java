@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,10 +18,11 @@ public class Account {
     private String password;
     private String phoneNumber;
     private RoleEnum role;
-    private LocalDate createdAt;
-    private LocalDate lastSession;
-    private boolean AccountNonExpired;
-    private boolean AccountNonLocked;
-    private boolean CredentialsNonExpired;
-    private boolean Enabled;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime lastSession;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 }

@@ -26,15 +26,15 @@ public class RegisterMapper {
         return RegisterResponse.builder()
                 .id(entity.getId())
                 .email(entity.getEmail())
-                .password(entity.getPassword())
                 .phoneNumber(entity.getPhoneNumber())
                 .role(entity.getRole())
                 .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
                 .lastSession(entity.getLastSession())
-                .AccountNonExpired(entity.isAccountNonExpired())
-                .AccountNonLocked(entity.isAccountNonLocked())
-                .CredentialsNonExpired(entity.isCredentialsNonExpired())
-                .Enabled(entity.isEnabled())
+                .accountNonExpired(entity.isAccountNonExpired())
+                .accountNonLocked(entity.isAccountNonLocked())
+                .credentialsNonExpired(entity.isCredentialsNonExpired())
+                .enabled(entity.isEnabled())
                 .build();
     }
 }

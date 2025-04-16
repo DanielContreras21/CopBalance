@@ -1,5 +1,7 @@
 package com.copito.copbalance.security.domain.usecase;
 
+import com.copito.copbalance.security.domain.model.dto.request.LoginRequest;
+
 public interface LoginUseCase {
-//    LoginResponse login(LoginRequest request);
+    String login(LoginRequest request);
 }

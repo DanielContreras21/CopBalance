@@ -14,6 +14,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -47,7 +48,7 @@ public class RegisterUseCaseImp implements RegisterUseCase {
 
         Account account = mapper.toEntity(request);
         account.setRole(RoleEnum.USER);
-        account.setCreatedAt(LocalDate.now());
+        account.setCreatedAt(LocalDateTime.now());
         account.setAccountNonExpired(true);
         account.setAccountNonLocked(true);
         account.setCredentialsNonExpired(true);

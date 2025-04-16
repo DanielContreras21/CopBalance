@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "accounts")
@@ -41,21 +42,25 @@ public class AccountEntity {
 
     @Column(nullable = false, name = "created_at")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime updatedAt;
 
     @Column(name = "last_session")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDate lastSession;
+    private LocalDateTime lastSession;
 
     @Column(name = "account_non_expired", nullable = false)
-    private boolean AccountNonExpired;
+    private boolean accountNonExpired;
 
     @Column(name = "account_non_locked", nullable = false)
-    private boolean AccountNonLocked;
+    private boolean accountNonLocked;
 
     @Column(name = "credentials_non_expired", nullable = false)
-    private boolean CredentialsNonExpired;
+    private boolean credentialsNonExpired;
 
     @Column(name = "enabled", nullable = false)
-    private boolean Enabled;
+    private boolean enabled;
 }
