@@ -62,6 +62,7 @@ public class JwtUtils {
                 .sign(algorithm);
     }
 
+
     public DecodedJWT validateToken(String token){
         try{
             Algorithm algorithm = Algorithm.HMAC256(privateKey);

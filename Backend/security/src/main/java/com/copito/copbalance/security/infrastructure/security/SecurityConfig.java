@@ -31,7 +31,8 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> {
-                        request.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    request.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    request.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                 })
                 .formLogin(Customizer.withDefaults())
                 .addFilterBefore(new JwtValidator(jwtUtils), BasicAuthenticationFilter.class)

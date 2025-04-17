@@ -1,3 +1,10 @@
+base:
+  url: http://localhost:8081/
+
+email:
+  username: ${EMAIL}
+  password: ${PASSWORD}
+
 server:
   port: 8081
 
@@ -13,7 +20,7 @@ spring:
     driver: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:

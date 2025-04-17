@@ -3,17 +3,15 @@ package com.copito.copbalance.security.infrastructure.persitence.repository.acco
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
 import com.copito.copbalance.security.infrastructure.persitence.entity.AccountEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class AccountRepositoryAdapter implements AccountRepositoryPort {
     private final AccountJpaRepository accountJpaRepository;
-
-    public AccountRepositoryAdapter(AccountJpaRepository accountJpaRepository){
-        this.accountJpaRepository = accountJpaRepository;
-    }
 
     @Override
     public Account save(Account account) {
@@ -42,7 +40,7 @@ public class AccountRepositoryAdapter implements AccountRepositoryPort {
         accountJpaRepository.deleteById(id);
     }
 
-    private AccountEntity toEntity(Account account){
+    public AccountEntity toEntity(Account account){
         return new AccountEntity(
                 account.getId(),
                 account.getEmail(),
@@ -59,7 +57,7 @@ public class AccountRepositoryAdapter implements AccountRepositoryPort {
         );
     }
 
-    private Account toDomain(AccountEntity entity){
+    public Account toDomain(AccountEntity entity){
         return new Account(
                 entity.getId(),
                 entity.getEmail(),
