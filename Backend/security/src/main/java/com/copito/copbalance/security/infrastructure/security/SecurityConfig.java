@@ -33,6 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     request.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
+                    request.requestMatchers(HttpMethod.PUT, "/auth/**").permitAll();
+                    request.requestMatchers(HttpMethod.PATCH, "/auth/**").permitAll();
                 })
                 .formLogin(Customizer.withDefaults())
                 .addFilterBefore(new JwtValidator(jwtUtils), BasicAuthenticationFilter.class)

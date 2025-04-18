@@ -32,6 +32,10 @@ public class AccountEntity {
     @Column(name = "password")
     @Length(min = 6)
     private String password;
+    private String name;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(unique = true, name = "phone_number", nullable = false)
     @Pattern(regexp = "^3\\d{9}$", message = "Ingrese un numero de teléfono correcto")

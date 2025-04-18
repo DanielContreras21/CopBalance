@@ -1,12 +1,10 @@
 package com.copito.copbalance.security.application;
 
 import com.copito.copbalance.security.domain.model.dto.request.LoginRequest;
-import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
 import com.copito.copbalance.security.domain.usecase.LoginUseCase;
 import com.copito.copbalance.security.infrastructure.security.JwtUtils;
 import com.copito.copbalance.security.infrastructure.security.UserDetailsServiceImp;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

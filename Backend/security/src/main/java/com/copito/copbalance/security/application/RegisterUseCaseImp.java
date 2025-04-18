@@ -59,7 +59,8 @@ public class RegisterUseCaseImp implements RegisterUseCase {
         Account saveAccount = repository.save(account);
 
         Map<String, Object> variables = Map.of(
-                "name", account.getEmail() //cambiar por nombre despues
+                "name", account.getName(),
+                "lastName", account.getLastName()
         );
 
         try{

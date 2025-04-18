@@ -27,11 +27,11 @@ public class ActivateAccountUseCaseImp implements ActivateAccountUseCase {
             token.setExpired(true);
         }
 
-        if (token.getExpired){
+        if (token.isExpired()){
             throw new IllegalStateException("El token ha expirado");
         }
 
-        if (token.getTokenType() != TypeEnum.ACTIVATION) {
+        if (token.getType() != TypeEnum.ACTIVATION) {
             throw new IllegalStateException("Token inválido para activación");
         }
 

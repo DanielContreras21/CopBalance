@@ -1,9 +1,7 @@
 package com.copito.copbalance.security.infrastructure.persitence.repository.token;
 
-import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.model.entity.Token;
 import com.copito.copbalance.security.domain.repository.TokenRepositoryPort;
-import com.copito.copbalance.security.infrastructure.persitence.entity.AccountEntity;
 import com.copito.copbalance.security.infrastructure.persitence.entity.TokenEntity;
 import com.copito.copbalance.security.infrastructure.persitence.repository.account.AccountRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +44,9 @@ public class TokenRepositoryAdapter implements TokenRepositoryPort {
                 accountRepositoryAdapter.toEntity(token.getAccount()),
                 token.getCreatedAt(),
                 token.getExpiresAt(),
-                token.getTokenType(),
-                token.isExpired()
+                token.isExpired(),
+                token.getType()
+
         );
     }
 
@@ -58,8 +57,8 @@ public class TokenRepositoryAdapter implements TokenRepositoryPort {
                 accountRepositoryAdapter.toDomain(entity.getEntity()),
                 entity.getCreatedAt(),
                 entity.getExpiresAt(),
-                entity.getTokenType(),
-                entity.isExpired()
+                entity.isExpired(),
+                entity.getType()
         );
     }
 }

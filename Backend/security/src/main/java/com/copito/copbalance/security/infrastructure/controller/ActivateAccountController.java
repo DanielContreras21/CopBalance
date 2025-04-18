@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 public class ActivateAccountController {
     private final ActivateAccountUseCase useCase;
 
-    @GetMapping("/activate")
-    public ResponseEntity<String> sendEmail(@QueryParam("random") String random) {
+    @PatchMapping("/activate")
+    public ResponseEntity<String> sendEmail(@RequestParam("random") String random) {
         useCase.activate(random);
         return ResponseEntity.ok("Cuenta activada existosamente");
     }

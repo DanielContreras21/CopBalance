@@ -14,16 +14,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "tokens")
 public class TokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String random;
 
-    @OneToOne
+    @ManyToOne
     private AccountEntity entity;
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
-    private TypeEnum tokenType;
     private boolean expired;
+    private TypeEnum type;
 }

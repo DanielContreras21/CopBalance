@@ -1,8 +1,6 @@
 package com.copito.copbalance.security.domain.model.entity;
 
 import com.copito.copbalance.security.domain.model.enums.TypeEnum;
-import com.copito.copbalance.security.infrastructure.persitence.entity.AccountEntity;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +18,6 @@ public class Token {
     private Account account;
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
-    private TypeEnum tokenType;
     private boolean expired;
+    private TypeEnum type;
 }

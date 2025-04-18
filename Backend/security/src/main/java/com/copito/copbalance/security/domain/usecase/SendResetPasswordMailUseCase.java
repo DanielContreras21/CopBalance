@@ -1,5 +1,5 @@
 package com.copito.copbalance.security.domain.usecase;
 
-public interface SendActivationMailUseCase {
+public interface SendResetPasswordMailUseCase {
     void send(String id);
 }
