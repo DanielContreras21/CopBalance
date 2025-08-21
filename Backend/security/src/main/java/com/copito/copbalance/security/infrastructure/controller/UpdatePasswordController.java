@@ -1,6 +1,6 @@
 package com.copito.copbalance.security.infrastructure.controller;
 
-import com.copito.copbalance.security.domain.model.dto.request.UpdatePasswordRequest;
+import com.copito.copbalance.security.application.dto.request.UpdatePasswordRequest;
 import com.copito.copbalance.security.domain.usecase.UpdatePasswordUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

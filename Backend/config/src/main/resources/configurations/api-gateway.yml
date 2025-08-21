@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+security:
+  jwt:
+    key: ${JWT_KEY}
+    user: CopBalance-Backend
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: security
+          uri: http://localhost:8090
+          predicates:
+            - Path=/auth/**
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

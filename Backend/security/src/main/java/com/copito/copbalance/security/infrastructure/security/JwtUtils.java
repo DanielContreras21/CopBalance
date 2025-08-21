@@ -61,38 +61,4 @@ public class JwtUtils {
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .sign(algorithm);
     }
-
-
-    public DecodedJWT validateToken(String token){
-        try{
-            Algorithm algorithm = Algorithm.HMAC256(privateKey);
-
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(userGenerator)
-                    .build();
-
-            DecodedJWT decodedJWT = verifier.verify(token);
-
-            return decodedJWT;
-        }
-        catch (JWTVerificationException exception){
-            throw new JWTVerificationException("Invalid Token");
-        }
-    }
-
-    public String extractUserId(DecodedJWT decodedJWT) {
-        return decodedJWT.getClaim("userId").asString();
-    }
-
-    public String extractUsername(DecodedJWT decodedJWt){
-        return decodedJWt.getSubject();
-    }
-
-    public Claim getClaim(DecodedJWT decodedJWT, String claimName){
-        return decodedJWT.getClaim(claimName);
-    }
-
-    public Map<String, Claim> getAllClaims(DecodedJWT decodedJWT){
-        return decodedJWT.getClaims();
-    }
 }

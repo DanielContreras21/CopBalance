@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.domain.model.exception;
+package com.copito.copbalance.security.infrastructure.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
-package com.copito.copbalance.security.domain.model.mapper.account;
+package com.copito.copbalance.security.application.mapper.account;
 
-import com.copito.copbalance.security.domain.model.dto.request.RegisterRequest;
-import com.copito.copbalance.security.domain.model.dto.response.RegisterResponse;
+import com.copito.copbalance.security.application.dto.request.RegisterRequest;
+import com.copito.copbalance.security.application.dto.response.RegisterResponse;
 import com.copito.copbalance.security.domain.model.entity.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

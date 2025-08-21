@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.domain.model.dto.response;
+package com.copito.copbalance.security.application.dto.response;
 
 import com.copito.copbalance.security.domain.model.enums.RoleEnum;
 import lombok.AllArgsConstructor;

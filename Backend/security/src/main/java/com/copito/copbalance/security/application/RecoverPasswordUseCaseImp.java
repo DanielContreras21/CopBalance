@@ -1,6 +1,6 @@
 package com.copito.copbalance.security.application;
 
-import com.copito.copbalance.security.domain.model.dto.request.RecoverPasswordRequest;
+import com.copito.copbalance.security.application.dto.request.RecoverPasswordRequest;
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.model.entity.Token;
 import com.copito.copbalance.security.domain.model.enums.TypeEnum;

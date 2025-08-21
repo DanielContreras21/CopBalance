@@ -1,6 +1,6 @@
 package com.copito.copbalance.security.application;
 
-import com.copito.copbalance.security.domain.model.dto.request.LoginRequest;
+import com.copito.copbalance.security.application.dto.request.LoginRequest;
 import com.copito.copbalance.security.domain.usecase.LoginUseCase;
 import com.copito.copbalance.security.infrastructure.security.JwtUtils;
 import com.copito.copbalance.security.infrastructure.security.UserDetailsServiceImp;

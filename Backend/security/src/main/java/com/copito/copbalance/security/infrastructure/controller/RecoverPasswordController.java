@@ -1,8 +1,7 @@
 package com.copito.copbalance.security.infrastructure.controller;
 
-import com.copito.copbalance.security.domain.model.dto.request.RecoverPasswordRequest;
+import com.copito.copbalance.security.application.dto.request.RecoverPasswordRequest;
 import com.copito.copbalance.security.domain.usecase.RecoverPasswordUseCase;
-import jakarta.ws.rs.QueryParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

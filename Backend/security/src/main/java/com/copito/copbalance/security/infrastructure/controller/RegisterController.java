@@ -1,15 +1,12 @@
 package com.copito.copbalance.security.infrastructure.controller;
 
-import com.copito.copbalance.security.domain.model.dto.request.RegisterRequest;
-import com.copito.copbalance.security.domain.model.dto.response.RegisterResponse;
+import com.copito.copbalance.security.application.dto.request.RegisterRequest;
+import com.copito.copbalance.security.application.dto.response.RegisterResponse;
 import com.copito.copbalance.security.domain.usecase.RegisterUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")

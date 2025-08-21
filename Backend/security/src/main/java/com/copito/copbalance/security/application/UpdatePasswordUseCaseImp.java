@@ -1,6 +1,6 @@
 package com.copito.copbalance.security.application;
 
-import com.copito.copbalance.security.domain.model.dto.request.UpdatePasswordRequest;
+import com.copito.copbalance.security.application.dto.request.UpdatePasswordRequest;
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
 import com.copito.copbalance.security.domain.usecase.UpdatePasswordUseCase;
