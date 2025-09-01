@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.application;
+package com.copito.copbalance.security.application.usecase;
 
 import com.copito.copbalance.security.domain.model.enums.TypeEnum;
 import com.copito.copbalance.security.domain.usecase.SendResetPasswordMailUseCase;

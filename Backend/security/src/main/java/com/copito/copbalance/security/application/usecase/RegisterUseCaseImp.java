@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.application;
+package com.copito.copbalance.security.application.usecase;
 
 import com.copito.copbalance.security.application.dto.request.RegisterRequest;
 import com.copito.copbalance.security.application.dto.response.RegisterResponse;
@@ -29,6 +29,7 @@ public class RegisterUseCaseImp implements RegisterUseCase {
     @Override
     public RegisterResponse register(RegisterRequest request) {
         boolean isEmailExist = repository.findByEmail(request.getEmail()).isPresent();
+        boolean isPhoneNumberExist = repository.findByPhoneNumber(request.getPhoneNumber()).isPresent();
 
         if (!EmailValidator.isEmailValid(request.getEmail())){
             throw new IllegalArgumentException("Ingrese un correo electrónico válido");
@@ -44,6 +45,9 @@ public class RegisterUseCaseImp implements RegisterUseCase {
         }
         if (request.getPassword().length() <6){
             throw new IllegalArgumentException("La contraseña debe ser mayor o igual a 6 dígitos");
+        }
+        if (isPhoneNumberExist){
+            throw new DuplicateKeyException("El teléfono no se encuentra disponible");
         }
         if (!PhoneValidator.isValidColombianPhone(request.getPhoneNumber())){
             throw new IllegalArgumentException("Ingrese un número de teléfono correcto");

@@ -11,5 +11,6 @@ public interface AccountRepositoryPort {
     Account save(Account account);
     Optional<Account> findByEmail(String email);
     Optional<Account> findById(String id);
+    Optional<Account> findByPhoneNumber(String phoneNumber);
     void deleteById(String id);
 }

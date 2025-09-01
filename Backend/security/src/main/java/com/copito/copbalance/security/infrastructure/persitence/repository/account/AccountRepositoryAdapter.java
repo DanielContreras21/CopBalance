@@ -40,6 +40,14 @@ public class AccountRepositoryAdapter implements AccountRepositoryPort {
     }
 
     @Override
+    public Optional<Account> findByPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null){
+            throw new IllegalArgumentException("El número de teléfono no puede ser null");
+        }
+        return accountJpaRepository.findByPhoneNumber(phoneNumber).map(accountMapper::toDomain);
+    }
+
+    @Override
     public void deleteById(String id) {
         accountJpaRepository.deleteById(id);
     }

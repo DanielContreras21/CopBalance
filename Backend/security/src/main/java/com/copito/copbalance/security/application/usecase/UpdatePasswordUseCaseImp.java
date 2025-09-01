@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.application;
+package com.copito.copbalance.security.application.usecase;
 
 import com.copito.copbalance.security.application.dto.request.UpdatePasswordRequest;
 import com.copito.copbalance.security.domain.model.entity.Account;
@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 @RequiredArgsConstructor
 public class UpdatePasswordUseCaseImp implements UpdatePasswordUseCase {
@@ -19,7 +21,7 @@ public class UpdatePasswordUseCaseImp implements UpdatePasswordUseCase {
 
     @Override
     public void updatePassword(String id, UpdatePasswordRequest request) {
-        Account account = repository.findById(id).get();
+        Account account = repository.findById(id).orElseThrow(() -> new NoSuchElementException("El usuario no existe"));
         UserDetails userDetails = userDetailsService.loadUserByUsername(account.getEmail());
 
         if (!passwordEncoder.matches(request.getCurrentPassword(), userDetails.getPassword())){

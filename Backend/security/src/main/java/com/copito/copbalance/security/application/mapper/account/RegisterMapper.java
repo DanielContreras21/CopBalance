@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class RegisterMapper {
-
-    @Autowired
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
     public Account toEntity(RegisterRequest request){
         return Account.builder()
