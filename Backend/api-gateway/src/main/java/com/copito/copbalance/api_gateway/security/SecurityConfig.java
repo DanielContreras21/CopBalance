@@ -34,6 +34,9 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.GET, "/auth/**").permitAll()
                         .pathMatchers(HttpMethod.PUT, "/auth/**").permitAll()
                         .pathMatchers(HttpMethod.PATCH, "/auth/**").permitAll()
+//                        .pathMatchers(HttpMethod.GET, "/auth/getEmail/**").authenticated(
+                        .pathMatchers(HttpMethod.GET, "/users/**").permitAll()
+                                .pathMatchers(HttpMethod.POST, "/users/**").permitAll()
                         // todas las demás requieren autenticación
                         .anyExchange().authenticated()
                 )
