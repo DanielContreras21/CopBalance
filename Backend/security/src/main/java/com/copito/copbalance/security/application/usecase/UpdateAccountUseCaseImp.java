@@ -18,8 +18,6 @@ public class UpdateAccountUseCaseImp implements UpdateAccountUseCase {
         Account account = repository.findById(id).get();
 
         account.setEmail(request.getEmail() != null && !request.getEmail().isEmpty() ? request.getEmail() : account.getEmail());
-        account.setName(request.getName() != null && !request.getName().isEmpty() ? request.getName() : account.getName());
-        account.setLastName(request.getLastName() != null && !request.getLastName().isEmpty() ? request.getLastName() : account.getLastName());
         account.setPhoneNumber(request.getPhoneNumber() != null && !request.getPhoneNumber().isEmpty() ? request.getPhoneNumber() : account.getPhoneNumber());
 
         repository.save(account);

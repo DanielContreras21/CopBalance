@@ -8,13 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccountMapper implements Mapper<Account, AccountEntity> {
 
+    @Override
     public AccountEntity toEntity(Account account){
         return new AccountEntity(
                 account.getId(),
                 account.getEmail(),
                 account.getPassword(),
-                account.getName(),
-                account.getLastName(),
                 account.getPhoneNumber(),
                 account.getRole(),
                 account.getCreatedAt(),
@@ -27,13 +26,12 @@ public class AccountMapper implements Mapper<Account, AccountEntity> {
         );
     }
 
+    @Override
     public Account toDomain(AccountEntity entity){
         return new Account(
                 entity.getId(),
                 entity.getEmail(),
                 entity.getPassword(),
-                entity.getName(),
-                entity.getLastName(),
                 entity.getPhoneNumber(),
                 entity.getRole(),
                 entity.getCreatedAt(),

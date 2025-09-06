@@ -17,8 +17,6 @@ public class RegisterMapper {
         return Account.builder()
                 .email(request.getEmail())
                 .password(encoder.encode(request.getPassword()))
-                .name(request.getName())
-                .lastName(request.getLastName())
                 .phoneNumber(request.getPhoneNumber())
                 .build();
     }
@@ -26,8 +24,6 @@ public class RegisterMapper {
         return RegisterResponse.builder()
                 .id(entity.getId())
                 .email(entity.getEmail())
-                .name(entity.getName())
-                .lastName(entity.getLastName())
                 .phoneNumber(entity.getPhoneNumber())
                 .role(entity.getRole())
                 .createdAt(entity.getCreatedAt())

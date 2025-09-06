@@ -6,22 +6,18 @@ import com.copito.copbalance.security.domain.model.entity.Token;
 import com.copito.copbalance.security.domain.model.enums.TypeEnum;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
 import com.copito.copbalance.security.domain.repository.TokenRepositoryPort;
-import com.copito.copbalance.security.domain.usecase.EmailSender;
 import com.copito.copbalance.security.domain.usecase.RecoverPasswordUseCase;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
 public class RecoverPasswordUseCaseImp implements RecoverPasswordUseCase {
 
-    private final EmailSender emailSender;
     private final AccountRepositoryPort repository;
     private final TokenRepositoryPort tokenRepository;
     private final PasswordEncoder passwordEncoder;
@@ -49,17 +45,5 @@ public class RecoverPasswordUseCaseImp implements RecoverPasswordUseCase {
         Account account = token.getAccount();
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         repository.save(account);
-
-
-        Map<String, Object> variables = Map.of(
-                "name", account.getName(),
-                "lastName", account.getLastName()
-        );
-
-        try{
-            emailSender.sendMail(account.getEmail(), "Cambio de contraseña Exitoso", "password_reset_confirm.html", variables);
-        } catch (MessagingException e){
-            throw new  IllegalStateException("No se pudo enviar el correo", e);
-        }
     }
 }

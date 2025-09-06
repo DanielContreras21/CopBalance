@@ -2,21 +2,20 @@ package com.copito.copbalance.security.application.usecase;
 
 import com.copito.copbalance.security.application.dto.request.RegisterRequest;
 import com.copito.copbalance.security.application.dto.response.RegisterResponse;
+import com.copito.copbalance.security.application.events.EventPublisher;
+import com.copito.copbalance.security.domain.events.AccountRegisteredEvent;
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.model.enums.RoleEnum;
 import com.copito.copbalance.security.application.mapper.account.RegisterMapper;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
-import com.copito.copbalance.security.domain.usecase.EmailSender;
 import com.copito.copbalance.security.domain.usecase.RegisterUseCase;
 import com.copito.copbalance.security.utils.EmailValidator;
 import com.copito.copbalance.security.utils.PhoneValidator;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -24,7 +23,7 @@ import java.util.Objects;
 public class RegisterUseCaseImp implements RegisterUseCase {
     private final AccountRepositoryPort repository;
     private final RegisterMapper mapper;
-    private final EmailSender emailSender;
+    private final EventPublisher<AccountRegisteredEvent> eventPublisher;
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -62,17 +61,11 @@ public class RegisterUseCaseImp implements RegisterUseCase {
         account.setEnabled(false);
         Account saveAccount = repository.save(account);
 
-        Map<String, Object> variables = Map.of(
-                "name", account.getName(),
-                "lastName", account.getLastName()
-        );
 
-        try{
-            emailSender.sendMail(account.getEmail(), "Registraste tu cuenta en CopBalance", "register.html", variables);
-        } catch (MessagingException e){
-            throw new  IllegalStateException("No se pudo enviar el correo de activación", e);
-        }
+        AccountRegisteredEvent event = new AccountRegisteredEvent(saveAccount.getId());
+        eventPublisher.publish(event);
 
         return mapper.toDto(saveAccount);
+
     }
 }
