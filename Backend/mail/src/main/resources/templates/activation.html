@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Activación de cuenta</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+<div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto;">
+    <h2>Hola <span th:text="${name}"></span>,</h2>
+    <p>Gracias por registrarte en <strong>CopBalance</strong>.</p>
+    <p>Haz clic en el siguiente enlace para activar tu cuenta:</p>
+    <p style="text-align: center;">
+        <a th:href="${link}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+            Activar cuenta
+        </a>
+    </p>
+    <p style="color: #888;">El equipo de CopBalance</p>
+</div>
+</body>
+</html>
