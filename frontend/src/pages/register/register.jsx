@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { register } from "../../api/auth/register";
+import { completeUser } from "../../api/user/completeUser";
+import { accountExist } from "../../api/auth/accountExist";
 import { useNavigate, Link } from "react-router-dom";
 import "./register.css";
 
@@ -11,14 +13,20 @@ export default function Register() {
     confirmEmail: "",
     password: "",
     confirmPassword: "",
-    name: "",
-    lastName: "",
     phoneNumber: "",
   });
 
+  const [userFormData, setUserFormData] = useState({
+    identificationType: "CC",
+    identification: "",
+    name: "",
+    address: "",
+  });
+
+  const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false); // Estado para el indicador de carga
+  const [isLoading, setIsLoading] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^3\d{9}$/;
@@ -32,13 +40,18 @@ export default function Register() {
     setFormData({ ...formData, [id]: value });
   };
 
+  const handleUserChange = (e) => {
+    const { id, value } = e.target;
+    setUserFormData({ ...userFormData, [id]: value });
+  };
+
   const handlePhoneChange = (e) => {
     const { id, value } = e.target;
-    const numericValue = value.replace(/\D/g, '');
+    const numericValue = value.replace(/\D/g, "");
     setFormData({ ...formData, [id]: numericValue });
   };
 
-  const handleSubmit = async (e) => {
+  const handleNextStep = async (e) => {
     e.preventDefault();
     setIsSubmitted(true);
     setFieldErrors({});
@@ -46,7 +59,7 @@ export default function Register() {
     let hasError = false;
     const errors = {};
 
-    // Validación de email
+    // Client-side validation for Step 1
     if (!formData.email) {
       errors.email = "Este campo es obligatorio.";
       hasError = true;
@@ -54,8 +67,7 @@ export default function Register() {
       errors.email = "Ingresa un correo válido.";
       hasError = true;
     }
-    
-    // Validación de confirmación de email
+
     if (!formData.confirmEmail) {
       errors.confirmEmail = "Este campo es obligatorio.";
       hasError = true;
@@ -64,7 +76,6 @@ export default function Register() {
       hasError = true;
     }
 
-    // Validación de contraseña
     if (!formData.password) {
       errors.password = "Este campo es obligatorio.";
       hasError = true;
@@ -73,7 +84,6 @@ export default function Register() {
       hasError = true;
     }
 
-    // Validación de confirmación de contraseña
     if (!formData.confirmPassword) {
       errors.confirmPassword = "Este campo es obligatorio.";
       hasError = true;
@@ -82,17 +92,6 @@ export default function Register() {
       hasError = true;
     }
 
-    // Validación de campos restantes
-    if (!formData.name) {
-      errors.name = "Este campo es obligatorio.";
-      hasError = true;
-    }
-    if (!formData.lastName) {
-      errors.lastName = "Este campo es obligatorio.";
-      hasError = true;
-    }
-
-    // Validación del número de teléfono
     if (!formData.phoneNumber) {
       errors.phoneNumber = "Este campo es obligatorio.";
       hasError = true;
@@ -101,29 +100,92 @@ export default function Register() {
       hasError = true;
     }
 
-    setFieldErrors(errors);
-    
     if (hasError) {
+      setFieldErrors(errors);
       return;
     }
 
-    // Mostrar el spinner de carga antes de la petición
-    setIsLoading(true);
-
-    // Petición al API después de la validación del cliente
     try {
-      await register(formData);
-      navigate("/login");
+      const validateAccount = {
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+      };
+      await accountExist(validateAccount);
+      setStep(2);
     } catch (error) {
+      const newErrors = { ...errors };
       if (error.status === 409) {
         if (error.message.includes("correo electrónico")) {
-          setFieldErrors({ ...errors, email: "El correo electrónico ya se encuentra registrado." });
+          newErrors.email = "El correo electrónico ya se encuentra registrado.";
         } else if (error.message.includes("teléfono")) {
-          setFieldErrors({ ...errors, phoneNumber: "El teléfono ya se encuentra registrado." });
+          newErrors.phoneNumber = "El teléfono ya se encuentra registrado.";
         }
+        setFieldErrors(newErrors);
+      } else {
+        // Handle other general errors
+        setFieldErrors({ general: "Hubo un problema al registrar el usuario. Por favor, inténtalo de nuevo." });
       }
     } finally {
-      // Ocultar el spinner de carga al finalizar la petición
+      setIsLoading(false);
+    }
+  };
+
+  const handleUserSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setFieldErrors({});
+
+    let hasError = false;
+    const errors = {};
+
+    // Client-side validation for Step 2
+    if (!userFormData.name) {
+      errors.name = "El nombre es obligatorio.";
+      hasError = true;
+    }
+    if (!userFormData.identification) {
+      errors.identification = "La identificación es obligatoria.";
+      hasError = true;
+    }
+    if (!userFormData.address) {
+      errors.address = "La dirección es obligatoria.";
+      hasError = true;
+    }
+
+    if (hasError) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const registerResponse = await register(formData);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await completeUser({
+        ...userFormData,
+        id: registerResponse.id,
+      });
+      navigate("/login");
+    } catch (error) {
+      console.error("Error en el registro o al completar el perfil:", error);
+      const newErrors = { ...errors };
+      
+      // Check if the error is a 409 Conflict from the server
+      if (error.status === 409) {
+        setStep(1); // Go back to the registration form
+
+        if (error.message.includes("correo electrónico")) {
+          newErrors.email = "El correo electrónico ya se encuentra registrado.";
+        } else if (error.message.includes("teléfono")) {
+          newErrors.phoneNumber = "El teléfono ya se encuentra registrado.";
+        }
+        setFieldErrors(newErrors);
+      } else {
+        // Handle other general errors
+        setFieldErrors({ general: "Hubo un problema al registrar el usuario. Por favor, inténtalo de nuevo." });
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -137,95 +199,140 @@ export default function Register() {
       )}
       <div className="register-form-wrapper">
         <h2>Crea tu cuenta en Copbalance</h2>
-        <form className="register-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <div className="input-wrapper">
-              <input
-                type="text"
-                id="email"
-                className="input-field"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Correo electrónico"
-              />
-              {isSubmitted && fieldErrors.email && <p className="error-message">{fieldErrors.email}</p>}
+
+        {step === 1 && (
+          <form className="register-form" onSubmit={handleNextStep}>
+            {fieldErrors.general && <p className="error-message general-error">{fieldErrors.general}</p>}
+            <div className="form-group">
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  id="email"
+                  className="input-field"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Correo electrónico"
+                />
+                {isSubmitted && fieldErrors.email && <p className="error-message">{fieldErrors.email}</p>}
+              </div>
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  id="confirmEmail"
+                  className="input-field"
+                  value={formData.confirmEmail}
+                  onChange={handleChange}
+                  placeholder="Confirmar correo"
+                />
+                {isSubmitted && fieldErrors.confirmEmail && <p className="error-message">{fieldErrors.confirmEmail}</p>}
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="input-wrapper">
+                <input
+                  type="password"
+                  id="password"
+                  className="input-field"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Contraseña"
+                />
+                {isSubmitted && fieldErrors.password && <p className="error-message">{fieldErrors.password}</p>}
+              </div>
+              <div className="input-wrapper">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  className="input-field"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirmar contraseña"
+                />
+                {isSubmitted && fieldErrors.confirmPassword && <p className="error-message">{fieldErrors.confirmPassword}</p>}
+              </div>
             </div>
             <div className="input-wrapper">
               <input
-                type="text"
-                id="confirmEmail"
+                type="tel"
+                id="phoneNumber"
                 className="input-field"
-                value={formData.confirmEmail}
-                onChange={handleChange}
-                placeholder="Confirmar correo"
+                value={formData.phoneNumber}
+                onChange={handlePhoneChange}
+                placeholder="Número de teléfono"
               />
-              {isSubmitted && fieldErrors.confirmEmail && <p className="error-message">{fieldErrors.confirmEmail}</p>}
+              {isSubmitted && fieldErrors.phoneNumber && <p className="error-message">{fieldErrors.phoneNumber}</p>}
             </div>
-          </div>
-          <div className="form-group">
-            <div className="input-wrapper">
-              <input
-                type="password"
-                id="password"
-                className="input-field"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Contraseña"
-              />
-              {isSubmitted && fieldErrors.password && <p className="error-message">{fieldErrors.password}</p>}
+
+            <button type="submit" className="btn-submit">
+              Siguiente
+            </button>
+          </form>
+        )}
+
+        {step === 2 && (
+          <form className="register-form" onSubmit={handleUserSubmit}>
+            <button onClick={() => setStep(1)} className="btn-back">
+              &lt; Volver
+            </button>
+            {fieldErrors.general && <p className="error-message general-error">{fieldErrors.general}</p>}
+            <div className="form-group">
+              <div className="input-wrapper">
+                <label htmlFor="identificationType">Tipo de identificación</label>
+                <select
+                  id="identificationType"
+                  className="input-field"
+                  value={userFormData.identificationType}
+                  onChange={handleUserChange}
+                >
+                  <option value="CC">Cédula de Ciudadanía</option>
+                  <option value="NIT">NIT</option>
+                </select>
+              </div>
+              <div className="input-wrapper">
+                <label htmlFor="identification">Número de identificación</label>
+                <input
+                  type="text"
+                  id="identification"
+                  className="input-field"
+                  value={userFormData.identification}
+                  onChange={handleUserChange}
+                  placeholder="Número de identificación"
+                />
+                {isSubmitted && fieldErrors.identification && <p className="error-message">{fieldErrors.identification}</p>}
+              </div>
             </div>
+
             <div className="input-wrapper">
-              <input
-                type="password"
-                id="confirmPassword"
-                className="input-field"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                placeholder="Confirmar contraseña"
-              />
-              {isSubmitted && fieldErrors.confirmPassword && <p className="error-message">{fieldErrors.confirmPassword}</p>}
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="input-wrapper">
+              <label htmlFor="name">Nombre completo</label>
               <input
                 type="text"
                 id="name"
                 className="input-field"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Nombre"
+                value={userFormData.name}
+                onChange={handleUserChange}
+                placeholder="Nombre completo"
               />
               {isSubmitted && fieldErrors.name && <p className="error-message">{fieldErrors.name}</p>}
             </div>
+
             <div className="input-wrapper">
+              <label htmlFor="address">Dirección de residencia</label>
               <input
                 type="text"
-                id="lastName"
+                id="address"
                 className="input-field"
-                value={formData.lastName}
-                onChange={handleChange}
-                placeholder="Apellido"
+                value={userFormData.address}
+                onChange={handleUserChange}
+                placeholder="Dirección"
               />
-              {isSubmitted && fieldErrors.lastName && <p className="error-message">{fieldErrors.lastName}</p>}
+              {isSubmitted && fieldErrors.address && <p className="error-message">{fieldErrors.address}</p>}
             </div>
-          </div>
-          <div className="input-wrapper">
-            <input
-              type="tel"
-              id="phoneNumber"
-              className="input-field"
-              value={formData.phoneNumber}
-              onChange={handlePhoneChange}
-              placeholder="Número de teléfono"
-            />
-            {isSubmitted && fieldErrors.phoneNumber && <p className="error-message">{fieldErrors.phoneNumber}</p>}
-          </div>
+            <button type="submit" className="btn-submit">
+              Registrarse
+            </button>
+          </form>
+        )}
 
-          <button type="submit" className="btn-submit">
-            Registrarse
-          </button>
-        </form>
         <p className="login-link">
           ¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link>
         </p>

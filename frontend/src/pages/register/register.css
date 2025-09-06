@@ -146,3 +146,19 @@ h2 {
         transform: rotate(360deg);
     }
 }
+
+.btn-back {
+    background-color: transparent;
+    border: none;
+    color: #666;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-start;
+    padding: 0;
+    transition: color 0.3s ease;
+    margin-bottom: -0.75rem;
+}
+
+.btn-back:hover {
+    color: #333;
+}
