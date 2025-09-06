@@ -1,0 +1,22 @@
+base:
+  url: http://localhost:8091/
+
+email:
+  username: ${EMAIL}
+  password: ${PASSWORD}
+
+server:
+  port: 8091
+
+spring:
+  application:
+    name: mail
+  kafka:
+    bootstrap-servers: localhost:9092
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
