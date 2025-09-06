@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class AccountRequest {
     private String email;
-    private String name;
-    private String lastName;
     private String phoneNumber;
 }

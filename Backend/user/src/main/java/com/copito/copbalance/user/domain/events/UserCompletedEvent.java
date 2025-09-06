@@ -1,4 +1,4 @@
-package com.copito.copbalance.user.infrastructure.http.response;
+package com.copito.copbalance.user.domain.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountEmail {
+public class UserCompletedEvent {
+    private String name;
     private String email;
 }

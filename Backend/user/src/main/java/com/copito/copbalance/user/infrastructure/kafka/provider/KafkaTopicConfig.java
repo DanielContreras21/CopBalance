@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.infrastructure.kafka;
+package com.copito.copbalance.user.infrastructure.kafka.provider;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.config.TopicConfig;
@@ -22,7 +22,7 @@ public class KafkaTopicConfig {
         configurations.put(TopicConfig.SEGMENT_BYTES_CONFIG, "1073741824");
         configurations.put(TopicConfig.MAX_MESSAGE_BYTES_CONFIG, "1000012");
 
-        return TopicBuilder.name("account-registered")
+        return TopicBuilder.name("user-completed")
                 .partitions(2)
                 .replicas(2)
                 .configs(configurations)

@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.infrastructure.persitence.repository;
+package com.copito.copbalance.user.infrastructure.persistence.repository;
 
 public interface Mapper<D, E> {
     E toEntity(D domain);
