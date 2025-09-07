@@ -1,6 +1,6 @@
 package com.copito.copbalance.security.infrastructure.controller;
 
-import com.copito.copbalance.security.domain.usecase.ActivateAccountUseCase;
+import com.copito.copbalance.security.domain.usecase.account.ActivateAccountUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

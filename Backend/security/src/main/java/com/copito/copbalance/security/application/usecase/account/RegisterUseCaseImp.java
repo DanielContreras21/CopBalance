@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.application.usecase;
+package com.copito.copbalance.security.application.usecase.account;
 
 import com.copito.copbalance.security.application.dto.request.RegisterRequest;
 import com.copito.copbalance.security.application.dto.response.RegisterResponse;
@@ -8,7 +8,7 @@ import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.model.enums.RoleEnum;
 import com.copito.copbalance.security.application.mapper.account.RegisterMapper;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
-import com.copito.copbalance.security.domain.usecase.RegisterUseCase;
+import com.copito.copbalance.security.domain.usecase.account.RegisterUseCase;
 import com.copito.copbalance.security.utils.EmailValidator;
 import com.copito.copbalance.security.utils.PhoneValidator;
 import lombok.RequiredArgsConstructor;

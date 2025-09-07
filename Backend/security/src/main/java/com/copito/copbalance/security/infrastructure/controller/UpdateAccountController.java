@@ -1,7 +1,7 @@
 package com.copito.copbalance.security.infrastructure.controller;
 
 import com.copito.copbalance.security.application.dto.request.AccountRequest;
-import com.copito.copbalance.security.domain.usecase.UpdateAccountUseCase;
+import com.copito.copbalance.security.domain.usecase.account.UpdateAccountUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

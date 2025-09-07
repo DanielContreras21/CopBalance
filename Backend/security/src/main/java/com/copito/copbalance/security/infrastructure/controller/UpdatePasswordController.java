@@ -1,7 +1,7 @@
 package com.copito.copbalance.security.infrastructure.controller;
 
 import com.copito.copbalance.security.application.dto.request.UpdatePasswordRequest;
-import com.copito.copbalance.security.domain.usecase.UpdatePasswordUseCase;
+import com.copito.copbalance.security.domain.usecase.account.UpdatePasswordUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

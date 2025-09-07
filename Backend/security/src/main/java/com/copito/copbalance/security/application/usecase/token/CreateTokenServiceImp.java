@@ -1,13 +1,12 @@
-package com.copito.copbalance.security.application.usecase;
+package com.copito.copbalance.security.application.usecase.token;
 
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.model.entity.Token;
 import com.copito.copbalance.security.domain.model.enums.TypeEnum;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
 import com.copito.copbalance.security.domain.repository.TokenRepositoryPort;
-import com.copito.copbalance.security.domain.usecase.TokenSender;
+import com.copito.copbalance.security.domain.usecase.token.CreateTokenUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,13 +16,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class TokenSenderImp implements TokenSender {
+public class CreateTokenServiceImp implements CreateTokenUseCase {
 
     private final AccountRepositoryPort accountRepository;
     private final TokenRepositoryPort tokenRepository;
 
     @Override
-    public void send(String id, TypeEnum type) {
+    public void create(String id, TypeEnum type) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("El usuario no existe"));
         String random;

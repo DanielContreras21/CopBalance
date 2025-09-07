@@ -1,4 +1,4 @@
-package com.copito.copbalance.security.application.usecase;
+package com.copito.copbalance.security.application.usecase.account;
 
 import com.copito.copbalance.security.application.dto.request.RecoverPasswordRequest;
 import com.copito.copbalance.security.domain.model.entity.Account;
@@ -6,7 +6,7 @@ import com.copito.copbalance.security.domain.model.entity.Token;
 import com.copito.copbalance.security.domain.model.enums.TypeEnum;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
 import com.copito.copbalance.security.domain.repository.TokenRepositoryPort;
-import com.copito.copbalance.security.domain.usecase.RecoverPasswordUseCase;
+import com.copito.copbalance.security.domain.usecase.account.RecoverPasswordUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

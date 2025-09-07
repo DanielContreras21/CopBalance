@@ -1,9 +1,9 @@
-package com.copito.copbalance.security.application.usecase;
+package com.copito.copbalance.security.application.usecase.account;
 
 import com.copito.copbalance.security.application.dto.request.UpdatePasswordRequest;
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
-import com.copito.copbalance.security.domain.usecase.UpdatePasswordUseCase;
+import com.copito.copbalance.security.domain.usecase.account.UpdatePasswordUseCase;
 import com.copito.copbalance.security.infrastructure.security.UserDetailsServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

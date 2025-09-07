@@ -1,9 +1,9 @@
-package com.copito.copbalance.security.application.usecase;
+package com.copito.copbalance.security.application.usecase.account;
 
 import com.copito.copbalance.security.application.dto.response.AccountEmail;
 import com.copito.copbalance.security.domain.model.entity.Account;
 import com.copito.copbalance.security.domain.repository.AccountRepositoryPort;
-import com.copito.copbalance.security.domain.usecase.GetSecurityEmailService;
+import com.copito.copbalance.security.domain.usecase.account.GetSecurityEmailUSeCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GetSecurityEmailServiceImp implements GetSecurityEmailService {
+public class GetSecurityEmailUseCaseImp implements GetSecurityEmailUSeCase {
 
     private final AccountRepositoryPort repository;
 
